@@ -67,7 +67,7 @@ def read1(stream):
             buf.append(data)
         return ''.join(buf)
 
-def main():
+def main(connected_callback):
     if hasattr(sys.stdin, 'buffer'):
         stdin = sys.stdin.buffer
     else:
@@ -88,6 +88,8 @@ def main():
         data = conn.recv(RECV_BUFFER_SIZE)
         stderr.write(data)
         stderr.flush()
+
+        connected_callback(data)
 
         time.sleep(args.delay)
 
